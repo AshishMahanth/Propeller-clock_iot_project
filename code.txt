@@ -1,0 +1,531 @@
+//message = "WELCOME" (active high LED)
+
+unsigned long previousTime = 0;
+
+byte hours = 12;
+byte minutes = 45;
+byte seconds = 00;
+
+byte ch;
+
+  int sensor_pin = 8;
+  int input_state;
+      
+void setup()
+{
+    DDRD = 0xFF;
+    pinMode(sensor_pin, INPUT);
+}
+void loop()
+{ 
+    input_state = digitalRead(sensor_pin);
+    while (input_state != 0)
+  {
+    input_state = digitalRead(sensor_pin);    
+  }
+  
+ // display "WELCOME"
+
+  // letter 'W'
+        PORTD = 0x7e;
+  delay1();   //width of LED column
+        PORTD = 0x00;
+  delay1();   //width of blank column
+        PORTD = 0x01;
+  delay1();   //width of LED column
+        PORTD = 0x00;
+  delay1();   //width of blank column
+        PORTD = 0x0e;
+  delay1();   //width of LED column
+        PORTD = 0x00;
+  delay1();   //width of blank column
+        PORTD = 0x01;
+  delay1();   //width of LED column
+        PORTD = 0x00;
+  delay1();   //width of blank column
+        PORTD = 0x7e;
+  delay1();   //width of LED column
+        PORTD = 0x00;
+  delay1();   //width of blank column
+  
+  delay2();   // one column gap between letters
+
+  // letter 'E'
+        PORTD = 0x7f;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x49;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x49;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x49;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;       
+  delay1();
+
+  delay2();   // one column gap between letters
+
+  // letter 'L'
+        PORTD = 0x7f;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x01;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x01;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x01;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x01;
+  delay1();   
+        PORTD = 0x00;
+  delay1(); 
+  
+  delay2();   // one column gap between letters
+
+  // letter 'C'
+        PORTD = 0x3e;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x22;
+  delay1();   
+        PORTD = 0x00;
+  delay1();  
+  
+  delay2();   // one column gap between letters
+
+  // letter 'O'
+        PORTD = 0x3e;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x3e;
+  delay1();   
+        PORTD = 0x00;
+  delay1();  
+  
+  delay2();   // one column gap between letters
+
+  // letter 'M'
+        PORTD = 0x7f;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x20;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x18;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x20;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x7f;
+  delay1();   
+        PORTD = 0x00;
+  delay1(); 
+  
+  delay2();   // one column gap between letters
+
+  // letter 'E'
+        PORTD = 0x7f;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x49;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x49;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x49;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x41;
+  delay1();   
+        PORTD = 0x00;
+  delay1();  
+
+//========================================
+
+  delay(15);  // delay for gap between message and clock time
+
+  if (millis() >= (previousTime)) 
+  {
+     previousTime = previousTime + 1000;
+     seconds = seconds +1;
+     if (seconds == 60)
+     {
+        seconds = 0;
+        minutes = minutes +1;
+     }
+     if (minutes == 60)
+     {
+        minutes = 0;
+        hours = hours +1;
+     }
+     if (hours == 13)
+     {
+        hours = 1;
+     }
+  }
+  ch = seconds % 10;
+      display_ch();
+      delay1(); 
+      
+  ch = seconds/10;
+      display_ch();
+      delay1(); 
+
+       ch = ':'; 
+      display_ch();
+      delay1();     
+
+  ch = minutes % 10;
+      display_ch();
+      delay1(); 
+      
+  ch = minutes/10;
+      display_ch();
+      delay1(); 
+
+       ch = ':'; 
+      display_ch();
+      delay1();
+
+  ch = hours % 10;
+      display_ch();
+      delay1(); 
+      
+  ch = hours/10;
+      display_ch();
+      delay1();               
+}
+
+void display_ch()
+{
+    if(ch == 0)
+    {
+        PORTD = 0x7c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x8a;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0xa2;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x7c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();
+}
+
+    if(ch == 1)
+    {
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x80;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0xfe;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x84;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();  
+}
+
+    if(ch == 2)
+    {
+        PORTD = 0x8c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0xa2;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0xc2;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x84;
+  delay1();   
+        PORTD = 0x00;
+  delay1();  
+}
+
+    if(ch == 3)
+    {
+        PORTD = 0x62;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x96;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x8a;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x82;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x42;
+  delay1();   
+        PORTD = 0x00;
+  delay1(); 
+
+}
+
+    if(ch == 4)
+    {
+        PORTD = 0x20;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0xfe;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x24;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x28;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x30;
+  delay1();   
+        PORTD = 0x00;
+  delay1(); 
+}
+
+    if(ch == 5)
+    {
+        PORTD = 0x7a;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x8a;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x8a;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x8a;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x4e;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+}
+
+    if(ch == 6)
+    {
+        PORTD = 0x60;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x94;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x78;
+  delay1();   
+        PORTD = 0x00;
+  delay1(); 
+} 
+
+    if(ch == 7)
+    {
+        PORTD = 0x06;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x0a;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x12;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0xe2;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x02;
+  delay1();   
+        PORTD = 0x00;
+  delay1();  
+} 
+
+    if(ch == 8)
+    {
+        PORTD = 0x6c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x6c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();  
+
+} 
+
+    if(ch == 9)
+    {
+        PORTD = 0x3c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x52;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x92;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x0c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+
+} 
+
+    if(ch == ':')
+    {
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x6c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x6c;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+        PORTD = 0x00;
+  delay1();   
+
+} 
+
+}
+
+void delay1()
+{
+  delayMicroseconds(200);
+}
+
+void delay2()
+{
+  delayMicroseconds(400);
+}
